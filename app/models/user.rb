@@ -77,7 +77,8 @@ class User < ApplicationRecord
   end
 
   def feed
-    Micropost.where("user_id = ?", id)
+    # following_idsはhas_many :followingにより自動的に生成されるメソッド
+    Micropost.where("user_id IN (?) OR user_id = ?", following_ids, id)
   end
 
   def follow(user)
